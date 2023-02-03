@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeuser-deployment
+  labels:
+    app: node-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-user
+  template:
+    metadata:
+      labels:
+        app: node-user
+    spec:
+      containers:
+      - name: nodeuser
+        image: mahtabhj/backend-3tier:latest
+        ports:
+        - containerPort: 5000
+      
+        env:
+        - name: MONGO_URL
+          value: mongodb://mongodb-service:27017/mydb
+      restartPolicy: Always
